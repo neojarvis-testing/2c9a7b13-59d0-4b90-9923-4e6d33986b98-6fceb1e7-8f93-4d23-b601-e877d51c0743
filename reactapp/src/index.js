@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux'; // Import the Provider component
 import store from './store.js'; // Import your Redux store
 import { QueryClient, QueryClientProvider } from 'react-query'; // Import QueryClient and QueryClientProvider
@@ -10,7 +10,7 @@ import reportWebVitals from './reportWebVitals';
 
 const queryClient = new QueryClient(); // Create a QueryClient instance
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <QueryClientProvider client={queryClient}>
