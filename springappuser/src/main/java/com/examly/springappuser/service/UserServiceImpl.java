@@ -1,10 +1,13 @@
 package com.examly.springappuser.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.examly.springappuser.exception.UserAlreadyExistsException;
+import com.examly.springappuser.exception.UserNotFoundException;
 import com.examly.springappuser.model.User;
 import com.examly.springappuser.repository.UserRepo;
 
@@ -31,8 +34,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return this.userRepo.findByEmail(email);
+    public User getUserByEmail(String email) throws UserNotFoundException {
+        Optional<User> user = this.userRepo.findByEmail(email);
+        if(user.isEmpty()) {
+            throw new UserNotFoundException("Invalid login credentials, try again");
+        }
+        return user.get();
     }
 
 }

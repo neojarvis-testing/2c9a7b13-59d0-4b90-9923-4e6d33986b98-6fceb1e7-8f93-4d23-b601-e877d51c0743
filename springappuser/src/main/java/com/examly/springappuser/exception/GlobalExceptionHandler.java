@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.AuthenticationException;
 
 import com.examly.springappuser.response.ResponseHandler;
 import java.util.HashMap;
@@ -33,10 +33,16 @@ public class GlobalExceptionHandler {
         return ResponseHandler.generateResponse(exception.getMessage(), HttpStatus.CONFLICT, null);
     }
 
-    @ExceptionHandler(UsernameNotFoundException.class)
+    @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<Object> usernameNotFoundExceptionHandler(UsernameNotFoundException exception) {
+    public ResponseEntity<Object> userNotFoundExceptionHandler(UserNotFoundException exception) {
         return ResponseHandler.generateResponse(exception.getMessage(), HttpStatus.UNAUTHORIZED, null);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<Object> authenticationExceptionHandler(AuthenticationException exception) {
+        return ResponseHandler.generateResponse("Invalid login credentials", HttpStatus.UNAUTHORIZED, null);
     }
 
     @ExceptionHandler(Exception.class)

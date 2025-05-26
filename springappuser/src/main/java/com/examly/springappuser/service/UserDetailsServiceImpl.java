@@ -1,5 +1,7 @@
 package com.examly.springappuser.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,11 +23,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final User user = this.userRepo.findByUsername(username);
-        if(user == null) {
+        final Optional<User> user = this.userRepo.findByUsername(username);
+        if(user.isEmpty()) {
             throw new UsernameNotFoundException("Invalid login credentials!");
         }
-        return new UserPrincipal(user);
+        return new UserPrincipal(user.get());
     }
     
 }

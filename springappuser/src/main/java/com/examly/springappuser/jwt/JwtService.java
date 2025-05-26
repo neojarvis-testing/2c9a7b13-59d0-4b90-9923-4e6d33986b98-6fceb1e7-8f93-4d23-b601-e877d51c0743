@@ -1,7 +1,6 @@
 package com.examly.springappuser.jwt;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.security.Key;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.io.Decoders;
@@ -23,12 +22,10 @@ public class JwtService {
     }
 
     public String generateToken(User user) {
+
         Date now = new Date();
         Date expiryDate = new Date(now.getTime()+EXP_TIME);
-        HashMap<String, Object> userdata = new HashMap<>();
-        userdata.put("userId", user.getUserId());
-        userdata.put("username", user.getUsername());
-        userdata.put("role", user.getUserRole());
+        
         return Jwts.builder()
                             .setSubject(user.getUsername())
                             .claim("userId", user.getUserId())

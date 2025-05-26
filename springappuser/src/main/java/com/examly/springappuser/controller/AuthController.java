@@ -47,8 +47,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<Object> loginUser(@RequestBody LoginDTO loginDTO) throws UsernameNotFoundException{
         String email = loginDTO.getEmail();
+        final User user = this.userService.getUserByEmail(email);
         String password = loginDTO.getPassword();
-        User user = this.userService.getUserByEmail(email);
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), password));
         if(authentication.isAuthenticated()) {
             String token = this.jwtService.generateToken(user);
