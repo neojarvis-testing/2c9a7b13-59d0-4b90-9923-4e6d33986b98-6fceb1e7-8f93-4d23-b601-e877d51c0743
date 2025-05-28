@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import api from "../apiConfig";
 import './Login.css';
 
 
@@ -31,9 +32,15 @@ const Login = () => {
         setErrors(prevErrors => ({ ...prevErrors, [name]: message }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Login Successfull!');
+        try {
+            alert();
+            const response = await api.post("/users/login", formData);
+            localStorage.setItem("authToken", response?.data?.token);
+        } catch (error) {
+            
+        }
     };
 
     return (
