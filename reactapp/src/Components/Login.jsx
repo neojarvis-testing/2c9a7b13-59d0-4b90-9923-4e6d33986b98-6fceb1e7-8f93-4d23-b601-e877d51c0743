@@ -34,12 +34,14 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // let output = "login failed";
         try {
-            alert();
             const response = await api.post("/users/login", formData);
-            localStorage.setItem("authToken", response?.data?.token);
+            console.log(response, 'response');
+            // localStorage.setItem("authToken", response?.data?.response);
         } catch (error) {
-            
+            let message = error.response.data.message;
+            console.log(message);
         }
     };
 

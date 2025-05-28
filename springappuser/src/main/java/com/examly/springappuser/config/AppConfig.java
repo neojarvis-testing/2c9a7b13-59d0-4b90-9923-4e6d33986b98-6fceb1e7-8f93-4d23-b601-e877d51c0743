@@ -33,7 +33,7 @@ public class AppConfig {
         http.csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.disable())
             .authorizeHttpRequests(
-                request -> request.requestMatchers("/api/users/register", "/api/users/login")
+                request -> request.requestMatchers("/api/users/register", "/api/users/login", "/api/users/hello")
                                     .permitAll().anyRequest().authenticated()
             ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
