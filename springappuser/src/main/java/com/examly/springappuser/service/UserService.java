@@ -6,4 +6,5 @@ import com.examly.springappuser.model.User;
 public interface UserService {
     User registerUser(User user);
     User getUserByEmail(String email) throws UserNotFoundException;
+    User getUserById(int userId) throws UserNotFoundException;
 }

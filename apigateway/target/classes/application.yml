@@ -11,6 +11,14 @@ spring:
           uri: http://localhost:8085
           predicates:
             - Path=/api/users/**
+        - id: springappfeedback
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/feedback/**
+        - id: springappmedicine
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/patiets/**, /api/medicalhistory/**, /api/vitalsigns/**, /api/notifications/**
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       globalcors:
@@ -24,7 +32,7 @@ spring:
 # logging.level.org.springframework.security=DEBUG
 # logging.level.org.springframework.web=DEBUG
   
-# eureka:
-#   client:
-#     serviceUrl:
-#       defaultZone: 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

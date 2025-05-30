@@ -9,6 +9,7 @@ import java.util.HashMap;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 
@@ -57,6 +58,11 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<Object> authenticationExceptionHandler(AuthenticationException exception) {
         return ResponseHandler.generateResponse("Invalid credentials", HttpStatus.UNAUTHORIZED, null);
+    }
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<Object> accessDeniedExceptionHandler(AccessDeniedException exception) {
+        return ResponseHandler.generateResponse("You do not have permission to access this resource", HttpStatus.FORBIDDEN, null);
     }
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

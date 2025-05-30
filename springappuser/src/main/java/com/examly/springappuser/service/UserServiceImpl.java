@@ -21,6 +21,8 @@ public class UserServiceImpl implements UserService {
     public User registerUser(User user) {
         String password = user.getPassword();
         user.setPassword(encoder.encode(password));
+        String role = user.getUserRole();
+        user.setUserRole(role.toUpperCase());
         return this.userRepo.save(user);
     }
     @Override
@@ -28,6 +30,14 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = this.userRepo.findByEmail(email);
         if(user.isEmpty()) {
             throw new UserNotFoundException("Invalid email or password");
+        }
+        return user.get();
+    }
+    @Override
+    public User getUserById(int userId) throws UserNotFoundException {
+        Optional<User> user = this.userRepo.findById(userId);
+        if(user.isEmpty()) {
+            throw new UserNotFoundException("No user found with that ID");
         }
         return user.get();
     }
